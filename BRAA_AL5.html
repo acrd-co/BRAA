@@ -5,7 +5,7 @@
   
 
 
-  <!-- <script type="text/javascript" src="./jquery-2.1.3.js"></script> -->
+  <script type="text/javascript" src="keydrown.js"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 
@@ -67,12 +67,11 @@
   </style>
 
 
-  <!-- TODO: Missing CoffeeScript 2 -->
+
 
   <script type="text/javascript">
 
   
-//<![CDATA[
 
     $(window).load(function(){
 
@@ -83,6 +82,7 @@
 
     var key = event.key || event.keyCode;
 
+    
     if (key == 8) {
         altitude += 1;
     }
@@ -285,6 +285,44 @@ function keyup_handler(event) {
   }
 }
 
+function round5(x)
+{
+    return x%5<3 ? (x%5===0 ? x : Math.floor(x/5)*5) : Math.ceil(x/5)*5;
+}
+
+kd.A.down(function () {
+    blueangle -= 1;
+    bluemagnetic = ((360+blueangle+90) %360);
+    bluemagnetic=round5(bluemagnetic);
+    $('#HDG').html('<br/>BLUE: '+bluemagnetic+'<br/>RED: '+redmagnetic);
+});
+
+kd.S.down(function () {
+    blueangle += 1;
+    bluemagnetic = ((360+blueangle+90) %360);
+    bluemagnetic=round5(bluemagnetic);
+    $('#HDG').html('<br/>BLUE: '+bluemagnetic+'<br/>RED: '+redmagnetic);
+});
+
+kd.Q.down(function () {
+    redangle -= 1;
+    redmagnetic = ((360+redangle+90) %360);
+    redmagnetic=round5(redmagnetic);
+    $('#HDG').html('<br/>BLUE: '+bluemagnetic+'<br/>RED: '+redmagnetic);
+});
+
+kd.W.down(function () {
+    redangle += 1;
+    redmagnetic = ((360+redangle+90) %360);
+    redmagnetic=round5(redmagnetic);
+    $('#HDG').html('<br/>BLUE: '+bluemagnetic+'<br/>RED: '+redmagnetic);
+});
+
+// This update loop is the heartbeat of Keydrown
+kd.run(function () {
+  kd.tick();
+});
+
 function keypress_handler(event) {
   console.log(event.keyCode)
   // up
@@ -302,19 +340,20 @@ function keypress_handler(event) {
     bluemagnetic = ((360+blueangle+90) %360);
     $('#HDG').html('<br/>BLUE: '+bluemagnetic+'<br/>RED: '+redmagnetic);
   }
+
   // right
   if(event.keyCode == 39) {
     blueangle += 5
     bluemagnetic = ((360+blueangle+90) %360);
   $('#HDG').html('<br/>BLUE: '+bluemagnetic+'<br/>RED: '+redmagnetic);
   }
-  // 4 100 52
+  // # num left(4) 100 52
   if(event.keyCode == 100 || event.keyCode == 52) {
     redangle -= 5
     redmagnetic = ((360+redangle+90) %360);
     $('#HDG').html('<br/>BLUE: '+bluemagnetic+'<br/>RED: '+redmagnetic);
   }
-  // 6 102 54
+  // #num right (6) 102 54
   if(event.keyCode == 102 || event.keyCode == 54) {
     redangle += 5
     redmagnetic = ((360+redangle+90) %360);
