@@ -15,6 +15,10 @@
     body.noScroll { /* ...or body.dialogShowing */
     overflow: hidden;}
 
+    body {
+    font: normal 16px Verdana, Arial, sans-serif;
+}
+
     canvas {
     cursor: crosshair;
     border: 0px solid #000000;
@@ -28,7 +32,7 @@
     
 }
 .holder{
-    width: 90vw;
+    width: 86vw;
     height:92vh;
     left: 10px;
     min-height: 100%;
@@ -50,18 +54,45 @@
     right: 5px;
 }
 
+#sidebar{
+    width: 13vw;
+    height: 92vh;
+    border: 2px solid #FFF;
+    background: #FFF;
+    position: absolute;
+    top: 8px;
+    right: 3px;
+}
+
 #speed{
     border: 2px solid #FFF;
     background: #FFF;
     position: absolute;
     bottom: 5px;
-    right: 5px;
+    right: 8px;
 }
 
 
 .braa{
     position: absolute;
     text-decoration: yellow
+}
+
+input {
+  width: 50px;
+  border: 1px solid black;
+  border-radius: 3px;
+  text-align: center;
+  font-size:16px;
+  margin-bottom: 4px;
+}
+button {
+  padding-bottom: 1px;
+  padding-top: 1px;
+  border: 1px solid black;
+  border-radius: 3px;
+  text-align: center;
+  font-size:16px;
 }
 
 
@@ -279,7 +310,8 @@ kd.LEFT.down(function () {
     blueangle -= 1;
     bluemagnetic = ((360+blueangle+90) %360);
     bluemagnetic=round5(bluemagnetic);
-    $('#HDG').html('<br/>BLUE: '+bluemagnetic+'<br/>RED: '+redmagnetic);
+    //$('#HDG').html('<br/>BLUE: '+bluemagnetic+'<br/>RED: '+redmagnetic);
+    $('#blue_form').val(bluemagnetic);
 });
 
 //RIGHT
@@ -287,7 +319,8 @@ kd.RIGHT.down(function () {
     blueangle += 1;
     bluemagnetic = ((360+blueangle+90) %360);
     bluemagnetic=round5(bluemagnetic);
-    $('#HDG').html('<br/>BLUE: '+bluemagnetic+'<br/>RED: '+redmagnetic);
+    //$('#HDG').html('<br/>BLUE: '+bluemagnetic+'<br/>RED: '+redmagnetic);
+    $('#blue_form').val(bluemagnetic);
 });
 
 //LEFT ARROW
@@ -295,7 +328,8 @@ kd.LEFT_ARROW.down(function () {
     redangle -= 1;
     redmagnetic = ((360+redangle+90) %360);
     redmagnetic=round5(redmagnetic);
-    $('#HDG').html('<br/>BLUE: '+bluemagnetic+'<br/>RED: '+redmagnetic);
+    //$('#HDG').html('<br/>BLUE: '+bluemagnetic+'<br/>RED: '+redmagnetic);
+    $('#red_form').val(redmagnetic);
 });
 
 //RIGHT ARROW
@@ -303,7 +337,8 @@ kd.RIGHT_ARROW.down(function () {
     redangle += 1;
     redmagnetic = ((360+redangle+90) %360);
     redmagnetic=round5(redmagnetic);
-    $('#HDG').html('<br/>BLUE: '+bluemagnetic+'<br/>RED: '+redmagnetic);
+    //$('#HDG').html('<br/>BLUE: '+bluemagnetic+'<br/>RED: '+redmagnetic);
+    $('#red_form').val(redmagnetic);
 });
 
 //CLIMB
@@ -344,10 +379,33 @@ kd.F.press(function(){
     red.src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+Cjxzdmcgd2lkdGg9IjI3IiBoZWlnaHQ9IjciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8IS0tIENyZWF0ZWQgd2l0aCBNZXRob2QgRHJhdyAtIGh0dHA6Ly9naXRodWIuY29tL2R1b3BpeGVsL01ldGhvZC1EcmF3LyAtLT4KIDxnPgogIDx0aXRsZT5iYWNrZ3JvdW5kPC90aXRsZT4KICA8cmVjdCBmaWxsPSJub25lIiBpZD0iY2FudmFzX2JhY2tncm91bmQiIGhlaWdodD0iOSIgd2lkdGg9IjI5IiB5PSItMSIgeD0iLTEiLz4KICA8ZyBkaXNwbGF5PSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgeT0iMCIgeD0iMCIgaGVpZ2h0PSIxMDAlIiB3aWR0aD0iMTAwJSIgaWQ9ImNhbnZhc0dyaWQiPgogICA8cmVjdCBmaWxsPSJ1cmwoI2dyaWRwYXR0ZXJuKSIgc3Ryb2tlLXdpZHRoPSIwIiB5PSIwIiB4PSIwIiBoZWlnaHQ9IjEwMCUiIHdpZHRoPSIxMDAlIi8+CiAgPC9nPgogPC9nPgogPGc+CiAgPHRpdGxlPkxheWVyIDE8L3RpdGxlPgogIDxlbGxpcHNlIHN0cm9rZT0iI2IyYjJiMiIgcnk9IjAuODMzMzMzIiByeD0iMC44MzMzMzMiIGlkPSJzdmdfMTAiIGN5PSIzLjQzODQwNiIgY3g9IjE4Ljg2MTQwNiIgc3Ryb2tlLXdpZHRoPSIxLjUiIGZpbGw9IiNmZmYiLz4KICA8ZWxsaXBzZSBzdHJva2U9IiMwMDdmN2YiIHJ5PSIyLjUzMTI0NCIgcng9IjIuNTMxMjQ0IiBpZD0ic3ZnXzEiIGN5PSIzLjUxMTMyNCIgY3g9IjIzLjM3MTgyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIGZpbGw9IiNhYWQ0ZmYiLz4KICA8ZWxsaXBzZSBzdHJva2U9IiNiMmIyYjIiIHJ5PSIwLjgzMzMzMyIgcng9IjAuODMzMzMzIiBpZD0ic3ZnXzQiIGN5PSIzLjQzODQwNiIgY3g9IjguNzk5MDE3IiBzdHJva2Utd2lkdGg9IjEuNSIgZmlsbD0iI2ZmZiIvPgogIDxlbGxpcHNlIHN0cm9rZT0iI2NjY2NjYyIgcnk9IjAuODMzMzMzIiByeD0iMC44MzMzMzMiIGlkPSJzdmdfNSIgY3k9IjMuNDM4NDA2IiBjeD0iNS4zNjE1NTQiIHN0cm9rZS13aWR0aD0iMS41IiBmaWxsPSIjZmZmIi8+CiAgPGVsbGlwc2Ugc3Ryb2tlPSIjZTVlNWU1IiByeT0iMC44MzMzMzMiIHJ4PSIwLjgzMzMzMyIgaWQ9InN2Z182IiBjeT0iMy40Mzg0MDYiIGN4PSIxLjk4NjU5MSIgc3Ryb2tlLXdpZHRoPSIxLjUiIGZpbGw9IiNmZmYiLz4KICA8ZWxsaXBzZSBzdHJva2U9IiNiMmIyYjIiIHJ5PSIwLjgzMzMzMyIgcng9IjAuODMzMzMzIiBpZD0ic3ZnXzgiIGN5PSIzLjQzODQwNiIgY3g9IjEyLjE3Mzk4IiBzdHJva2Utd2lkdGg9IjEuNSIgZmlsbD0iI2ZmZiIvPgogIDxlbGxpcHNlIHN0cm9rZT0iI2IyYjJiMiIgcnk9IjAuODMzMzMzIiByeD0iMC44MzMzMzMiIGlkPSJzdmdfOSIgY3k9IjMuNDM4NDA2IiBjeD0iMTUuNDg2NDQzIiBzdHJva2Utd2lkdGg9IjEuNSIgZmlsbD0iI2ZmZiIvPgogPC9nPgo8L3N2Zz4=";
 });
 
+//ENTER
+kd.ENTER.press(function(){
+    vector();
+});
+
 // This update loop is the heartbeat of Keydrown
 kd.run(function () {
   kd.tick();
 });
+
+
+
+
+//FORM
+
+function vector() {
+    blueangle = (document.getElementById("blue_form").value-90);
+    bluemagnetic = ((360+blueangle+90) %360);
+    bluemagnetic=round5(bluemagnetic);
+    redangle = (document.getElementById("red_form").value-90);
+    redmagnetic = ((360+redangle+90) %360);
+    redmagnetic=round5(redmagnetic);
+
+    $('#blue_form').val(bluemagnetic);
+    $('#red_form').val(redmagnetic);
+    //$('#form').html('<br/>BLUE: '+bluemagnetic+'<br/>RED: '+redmagnetic);
+}
 
 function keypress_handler(event) {
   console.log(event.keyCode)
@@ -358,13 +416,21 @@ function keypress_handler(event) {
 </head>
 <body style="background-color: transparent;" scroll="no" style="overflow: hidden"></body>
 <body>
-    
-  <div class="holder">
+        <div id="sidebar" class="sidebar" style="float:left; text-align:center; color:#000000d8:">
+                <input id = "blue_form" placeholder="HDG"></input>
+                <button value = 'send' id = "submit" style="background-color: #418dc0d8; " onclick="vector()">FTR</button><br/>
+                <input id = "red_form" placeholder="HDG"></input>
+                <button value = 'send' id = "submit" style="background-color: #db2020d8; " onclick="vector()">TGT</button><br/>
+            <div id="speed" class= "speed" style="text-align:right; color: #000000d8;">
 
+            </div>
+            </div>
+  <div class="holder">
    <canvas id="holder" width="1300px" height="1300px"></canvas>
-	<br/>
-    <div id="HDG" class="HDG" style="text-align:right; color: #000000d8;">BLUE:LEFT/RIGHT ARROW <br/> RED: LEFT/RIGHT on KEYPAD (#4 #6)  </div>
-    <div id="speed" class= "speed" style="text-align:right; color: #000000d8;"></div>
+    <br/>
+<!--     <div id="HDG" class="HDG" style="text-align:right; color: #000000d8;">BLUE:LEFT/RIGHT ARROW <br/> RED: LEFT/RIGHT on KEYPAD (#4 #6)  
+    </div> -->
+    
     <canvas id="canvas" width="1300px" height="1300px">
 </canvas>
 
