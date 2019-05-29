@@ -189,10 +189,15 @@ var KEY_MAP = {
   'DELETE': 46,
   'TAB': 9,
   'TILDE': 192,
-  'LEFT':38,
+  'LEFT':37,
   'RIGHT':39,
-  'NUM_LEFT':52,
-  'NUM_RIGHT':54,
+  'LEFT_ARROW':188,
+  'RIGHT_ARROW':190,
+  'NUM_EIGHT':104,
+  'NUM_TWO':98,
+  'NUM_MINUS':189,
+  'NUM_PLUS':187,
+  'UP':38,
 };
 
 
