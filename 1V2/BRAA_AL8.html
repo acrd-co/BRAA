@@ -372,6 +372,22 @@ kd.TWO.press(function () {
     mod = simrate*(0.0007523406152505/4)
 });
 
+//MARSHAL
+kd.E.down(function () {
+    blueangle += 1;
+    bluemagnetic = ((360+blueangle+90) %360);
+    bluemagnetic=round5(bluemagnetic);
+    $('#blue_form').val(bluemagnetic);
+    red1angle += 1;
+    red1magnetic = ((360+red1angle+90) %360);
+    red1magnetic=round5(red1magnetic);
+    $('#red1_form').val(red1magnetic);
+    red2angle += 1;
+    red2magnetic = ((360+red2angle+90) %360);
+    red2magnetic=round5(red2magnetic);
+    $('#red2_form').val(red2magnetic);
+});
+
 //LEFT
 kd.LEFT.down(function () {
     blueangle -= 1;
