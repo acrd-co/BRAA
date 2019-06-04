@@ -218,9 +218,9 @@ window.onload = function()
   red2x=520
   red2y=700
 
-  bluespeed = 500
-  red1speed = 500
-  red2speed = 500
+  bluespeed = 400
+  red1speed = 400
+  red2speed = 400
 
   blueangle = 270
   red1angle = 270
@@ -349,6 +349,41 @@ function round5(x)
 {
     return x%5<3 ? (x%5===0 ? x : Math.floor(x/5)*5) : Math.ceil(x/5)*5;
 }
+
+//SETUP MARSHAL 2 GROUPS
+kd.SPACE.press(function(){
+    bluex = 120
+    bluey = 390
+    blueangle = 360
+    bluemagnetic = 090
+    
+    red1x = 810
+    red1y = 200
+    red1angle = 270
+    red1magnetic = 360
+    
+    red2x=810
+    red2y=500
+    red2angle = 270
+    red2magnetic = 360 //ANGLE MINUS 90
+});
+
+kd.TILDE.press(function(){
+    bluex = 120
+    bluey = 390
+    blueangle = 360
+    bluemagnetic = 090
+    
+    red1x = 815
+    red1y = 390
+    red1angle = 270
+    red1magnetic = 360
+    
+    red2x=810
+    red2y=380
+    red2angle = 270
+    red2magnetic = 360 //ANGLE MINUS 90
+});
 
 //UP START
 kd.UP.press(function(){
