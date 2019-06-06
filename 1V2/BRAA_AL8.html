@@ -369,7 +369,12 @@ kd.TILDE.press(function(){
 });
 //UP START
 kd.UP.press(function(){
-    mod = simrate*(0.0007523406152505/4)
+    rateup();
+});
+
+//UP START
+kd.DOWN.press(function(){
+    ratedown();
 });
 //PAUSE
 kd.P.press(function(){
@@ -399,6 +404,12 @@ kd.E.down(function () {
     red2magnetic = ((360+red2angle+90) %360);
     red2magnetic=round5(red2magnetic);
     $('#red2_form').val(red2magnetic);
+
+});
+
+kd.E.up(function () {
+    altitude = Math.round(Math.random() * (+34 - +21) + +21)+0;
+    $('#altitude').html(+altitude+',000');
 });
 //LEFT
 kd.LEFT.down(function () {
@@ -518,9 +529,24 @@ kd.X.press(function(){
 });
 //ENTER
 kd.ENTER.press(function(){
-    vector();
+    mod = simrate*(0.0007523406152505/4) //UNPAUSE
+        if (document.getElementById("blue_form").value ==""){
+        $('#blue_form').val(bluemagnetic);
+        $('#red1_form').val(red1magnetic);
+        $('#red2_form').val(red2magnetic);}
+
+        if (document.getElementById("bluespeed_form").value ==""){
+        $('#bluespeed_form').val(bluespeed);
+        $('#redspeed_form').val(red1speed);}
     speed();
+    vector();
+    
 });
+
+kd.R.press(function(){
+    resetcap();
+});
+
 // This update loop is the heartbeat of Keydrown
 kd.run(function () {
   kd.tick();
@@ -597,7 +623,7 @@ function two_v() {
 
 function resetcap(){
     $(".holder").css("background-image", "url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+Cjxzdmcgd2lkdGg9IjEzMDAiIGhlaWdodD0iMTMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KCiA8Zz4KICA8dGl0bGU+TGF5ZXIgMTwvdGl0bGU+CiAgPGcgaWQ9IkxheWVyXzEiPgogICA8cmVjdCB5PSItMSIgaGVpZ2h0PSIxMzAyIiB3aWR0aD0iMTMwMiIgZmlsbD0iI0VCRUJFQiIgeD0iLTEiIGlkPSJjYW52YXNfYmFja2dyb3VuZCIvPgogIDwvZz4KICA8ZyBpZD0iTGF5ZXJfMiI+CiAgIDxwb2x5Z29uIHBvaW50cz0iOTQzLjMgMjUuMSA5NDkuNSA3MzEuNiAxNC43IDczNS4zIDguNCAyOC44IiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlPSIjQkY1RjAwIiBmaWxsPSJub25lIiBpZD0iQk9YXzJfIi8+CiAgIDxjaXJjbGUgaWQ9InN2Z18xIiByPSI1LjIiIGN5PSI1ODguNiIgY3g9IjExMDcuMSIgc3Ryb2tlLXdpZHRoPSI2IiBzdHJva2U9IiMwQTc1Q0MiIGZpbGw9IiNFQkVCRUIiLz4KICAgPHBvbHlnb24gaWQ9InN2Z18yIiBwb2ludHM9Ijg3MyA0Ni4yIDg3OC4xIDY5NC43IDk0LjcgNjk3LjMgODkuNSA0OC43IiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlPSIjNzU2NzY3IiBmaWxsPSJub25lIi8+CiAgIDxlbGxpcHNlIHJ5PSI0LjciIHJ4PSIzLjYiIGN5PSIyNy4yIiBjeD0iOTQ3LjUiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2U9IiNFRkVGMkIiIGZpbGw9IiNFQUJGMjUiIHRyYW5zZm9ybT0ibWF0cml4KDIuNzUzNjgwZS0wMyAtMSAxIDIuNzUzNjgwZS0wMyA5MTcuNjI0MyA5NzQuNjIzMSkiIGlkPSJzdmdfOV8yXyIvPgogICA8ZWxsaXBzZSByeT0iNC43IiByeD0iMy42IiBjeT0iMzk5LjUiIGN4PSI5NDkuMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iI0VGRUYyQiIgZmlsbD0iI0VBQkYyNSIgdHJhbnNmb3JtPSJtYXRyaXgoMi43NTM2ODBlLTAzIC0xIDEgMi43NTM2ODBlLTAzIDU0Ny4yMjggMTM0Ny42NTczKSIgaWQ9InN2Z18xMF8yXyIvPgogICA8bGluZSBpZD0ic3ZnXzMiIHkyPSIyNi45IiB4Mj0iNDk4IiB5MT0iNzM0LjIiIHgxPSI1MDQuMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iI0JGNUYwMCIgZmlsbD0ibm9uZSIvPgogICA8bGluZSBpZD0ic3ZnXzQiIHkyPSIzOTkuNSIgeDI9Ijk0Ni42IiB5MT0iNDAzIiB4MT0iMTEuNyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iI0JGNUYwMCIgZmlsbD0ibm9uZSIvPgogICA8cG9seWdvbiBpZD0ic3ZnXzUiIHBvaW50cz0iMTk0LjggNDguMiAyMDAgNjk2LjcgOTUuMiA2OTcgOTAgNDguNSIgZmlsbD0iI0VEMzUzNSIgb3BhY2l0eT0iMC42Ii8+CiAgIDxwb2x5Z29uIGlkPSJzdmdfNiIgcG9pbnRzPSI4NzIuMiA0Ny40IDg3Ny40IDY5NS45IDc3Mi43IDY5Ni4zIDc2Ny41IDQ3LjciIGZpbGw9IiMzMzAwOTkiIG9wYWNpdHk9IjAuNiIvPgogIDwvZz4KIDwvZz4KPC9zdmc+)");
-    red2.src = red1.src = ex_friend
+    //red2.src = red1.src = ex_friend
     bluex = 810
     bluey = 390
     blueangle = 360
@@ -614,6 +640,9 @@ function resetcap(){
     //red2y_offset = Math.round(Math.random() * (+38 - +7) + +7);
     red2angle = 270
     red2magnetic = 360 //ANGLE MINUS 90
+
+    altitude = Math.round(Math.random() * (+34 - +21) + +21)+0;
+    $('#altitude').html(+altitude+',000');
 
 };
 
