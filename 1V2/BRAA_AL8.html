@@ -45,20 +45,29 @@
     border: 2px solid #FFF;
     background: #FFF;
     position: absolute;
-    top: 5px;
-    right: 5px;
+    right: 0px;
+    top: 50px;
 }
-#sidebar{
-    width: 13vw;
-    height: 92vh;
+#FS{
     border: 2px solid #FFF;
     background: #FFF;
     position: absolute;
+    right: 0px;
+}
+#sidebar{
+    width: 14vw;
+    height: 98vh;
+    border: 1px solid #FFF;
+    background: #FFF;
+    position: absolute;
     top: 8px;
-    right: 3px;
+    right: 1px;
 }
 #speed{
     border: 1px solid #FFF;
+    text-align: right;
+    color:#000000d8;
+    float: right;
     font: normal 12px Verdana, Arial, sans-serif;
     background: #FFF;
     position: absolute;
@@ -66,11 +75,11 @@
     width: 150px;
     right: 8px;}
 #controls{
-    border: 2px solid #FFF;
+    border: 1px solid #FFF;
     background: #FFF;
     position: absolute;
-    bottom: 85px;
-    right: 10px;
+    bottom: 55px;
+    right: 0px;
 }
 #blue_form,#red1_form,#red2_form{
     width: 65px;
@@ -105,12 +114,47 @@ button {
   text-align: center;
   font-size:16px;
 }
+
+table tr td {
+    padding: 5;
+}
+.rightrow { float: right; text-align: right;}
+
   </style>
 
 
 
 
-  <script type="text/javascript">
+<script type="text/javascript">
+/* Get the documentElement (<html>) to display the page in fullscreen */
+    var elem = document.documentElement;
+
+/* View in fullscreen */
+function openFullscreen() {
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.mozRequestFullScreen) { /* Firefox */
+    elem.mozRequestFullScreen();
+  } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE/Edge */
+    elem.msRequestFullscreen();
+  }
+}
+
+/* Close fullscreen */
+function closeFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.mozCancelFullScreen) { /* Firefox */
+    document.mozCancelFullScreen();
+  } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) { /* IE/Edge */
+    document.msExitFullscreen();
+  }
+}
+
 $(window).load(function(){
 //Canvas
 var canvas = document.getElementById('canvas');
@@ -189,7 +233,7 @@ $(canvas).on('mousemove', function(e) {
     });
 window.onload = function()
 {
-    altitude = 19;
+  altitude = 19;
   target_scalex = 174
   target_scaley = 155
   bluex = 1090
@@ -198,7 +242,6 @@ window.onload = function()
   red1y = 585
   red2x=1100
   red2y=590
-
   bluespeed = 400
   red1speed = 400
   red2speed = 400
@@ -208,14 +251,12 @@ window.onload = function()
   bluemagnetic = 320
   red1magnetic = 320
   red2magnetic = 320
-
 //STRANGER
     stranger_x=1100
     stranger_y=600
     strangerspeed = 400
     strangerangle = 270
     strangermagnetic = 360 //ANGLE MINUS 90
-
   mod = 0
   simrate = 1
   canvas = document.getElementById("holder")
@@ -260,8 +301,6 @@ red2 = new Image(target_scalex, target_scaley)
   window.addEventListener("keydown", keypress_handler, false)
   window.addEventListener("keyup", keyup_handler, false)
   var moveInterval = setInterval(function() { drawred2(); }, 30)
-
-
 /* STRANGER*/
 stranger = new Image(target_scalex, target_scaley)
   stranger.src=""
@@ -273,11 +312,10 @@ stranger = new Image(target_scalex, target_scaley)
   window.addEventListener("keyup", keyup_handler, false)
   var moveInterval = setInterval(function() { drawstranger(); }, 30)
 }
-
 function refresh(){
   context = canvas.getContext("2d")
   context.clearRect(0, 0, 1300 , 1300 )
-  $('#speed').html('RATE: '+simrate+'x <br/>BLUE '+bluespeed+', RED '+red1speed+' KTS');
+  $('#speed').html('RATE: '+simrate+'x <br/>B: '+bluespeed+', R: '+red1speed+' KTS<br/>&copy; TC 2019');
   
 }
 function drawblue() {
@@ -315,7 +353,6 @@ function drawred2() {
   context.drawImage(red2, -(red2.width*0.322), -(red2.height/2))
   context.restore()
 }
-
 function drawstranger() {
   context = canvas.getContext("2d")
   stranger_x += (strangerspeed*mod/2) * Math.cos(Math.PI/180 * strangerangle)
@@ -326,7 +363,6 @@ function drawstranger() {
   context.drawImage(stranger, -(stranger.width*0.322), -(stranger.height/2))
   context.restore()
 }
-
 function keyup_handler(event) {console.log(event.keyCode)
 }
 function keypress_handler(event) {console.log(event.keyCode)}
@@ -334,44 +370,11 @@ function round5(x)
 {
     return x%5<3 ? (x%5===0 ? x : Math.floor(x/5)*5) : Math.ceil(x/5)*5;
 }
-//SETUP MARSHAL 2 GROUPS
-kd.SPACE.press(function(){
-    bluex = 120
-    bluey = 390
-    blueangle = 360
-    bluemagnetic = 090
-    
-    red1x = 810
-    red1y = 200
-    red1angle = 270
-    red1magnetic = 360
-    
-    red2x=810
-    red2y=500
-    red2angle = 270
-    red2magnetic = 360 //ANGLE MINUS 90
-});
-kd.TILDE.press(function(){
-    bluex = 120
-    bluey = 390
-    blueangle = 360
-    bluemagnetic = 090
-    
-    red1x = 815
-    red1y = 390
-    red1angle = 270
-    red1magnetic = 360
-    
-    red2x=810
-    red2y=380
-    red2angle = 270
-    red2magnetic = 360 //ANGLE MINUS 90
-});
-//UP START
+
+//UP RATE
 kd.UP.press(function(){
     rateup();
 });
-
 //UP START
 kd.DOWN.press(function(){
     ratedown();
@@ -404,9 +407,7 @@ kd.E.down(function () {
     red2magnetic = ((360+red2angle+90) %360);
     red2magnetic=round5(red2magnetic);
     $('#red2_form').val(red2magnetic);
-
 });
-
 kd.E.up(function () {
     altitude = Math.round(Math.random() * (+34 - +21) + +21)+0;
     $('#altitude').html(+altitude+',000');
@@ -534,7 +535,6 @@ kd.ENTER.press(function(){
         $('#blue_form').val(bluemagnetic);
         $('#red1_form').val(red1magnetic);
         $('#red2_form').val(red2magnetic);}
-
         if (document.getElementById("bluespeed_form").value ==""){
         $('#bluespeed_form').val(bluespeed);
         $('#redspeed_form').val(red1speed);}
@@ -542,11 +542,9 @@ kd.ENTER.press(function(){
     vector();
     
 });
-
 kd.R.press(function(){
     resetcap();
 });
-
 // This update loop is the heartbeat of Keydrown
 kd.run(function () {
   kd.tick();
@@ -573,7 +571,6 @@ function speed() {
     $('#bluespeed_form').val(bluespeed);
     $('#redspeed_form').val(red1speed);
 }
-
 function one_v() {
     red2.src=""
     bluex = 1090
@@ -594,9 +591,8 @@ function one_v() {
     simrate=1
     mod = simrate*(0.0007523406152505/4)
     $(".holder").css("background-image", "url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+Cjxzdmcgd2lkdGg9IjEzMDAiIGhlaWdodD0iMTMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KCiA8Zz4KICA8dGl0bGU+TGF5ZXIgMTwvdGl0bGU+CiAgPGcgc3Ryb2tlPSJudWxsIiBpZD0iTGF5ZXJfMSI+CiAgIDxyZWN0IHN0cm9rZT0ibnVsbCIgeT0iMiIgaGVpZ2h0PSIxMzAyIiB3aWR0aD0iMTMwMiIgZmlsbD0iI0VCRUJFQiIgeD0iLTEiIGlkPSJjYW52YXNfYmFja2dyb3VuZCIvPgogIDwvZz4KICA8cG9seWdvbiBzdHJva2U9IiNCRjVGMDAiIHBvaW50cz0iMTA1Mi41OCAyNS4xIDEwNTkuNSA4OTcuMDY3IDE1LjQzNjQgOTAxLjYzMyA4LjQgMjkuNjY2NiIgc3Ryb2tlLXdpZHRoPSIxLjUiIGZpbGw9Im5vbmUiIGlkPSJCT1hfMl8iLz4KICA8Y2lyY2xlIGlkPSJzdmdfMSIgcj0iNS4yIiBjeT0iNTg4LjYiIGN4PSIxMTA3LjEiIHN0cm9rZS13aWR0aD0iNiIgc3Ryb2tlPSIjMEE3NUNDIiBmaWxsPSIjRUJFQkVCIi8+CiAgPGVsbGlwc2Ugcnk9IjQuNyIgcng9IjMuNiIgY3k9IjI3LjIiIGN4PSI5NDcuNSIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iI0VGRUYyQiIgZmlsbD0iI0VBQkYyNSIgdHJhbnNmb3JtPSJtYXRyaXgoMi43NTM2ODBlLTAzIC0xIDEgMi43NTM2ODBlLTAzIDkxNy42MjQzIDk3NC42MjMxKSIgaWQ9InN2Z185XzJfIi8+CiAgPGVsbGlwc2Ugcnk9IjQuNyIgcng9IjMuNiIgY3k9IjUwNy43NTYxODkiIGN4PSI4NTYuMjY0NzY1IiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlPSIjRUZFRjJCIiBmaWxsPSIjRUFCRjI1IiB0cmFuc2Zvcm09Im1hdHJpeCgwLjAwMjc1MzY4IC0xIDEgMC4wMDI3NTM2OCA1NDcuMjI4IDEzNDcuNjYpIiBpZD0ic3ZnXzEwXzJfIi8+CiAgPGxpbmUgc3Ryb2tlPSIjQkY1RjAwIiBpZD0ic3ZnXzMiIHkyPSIyNi45IiB4Mj0iNTI3LjQ5OTU4OSIgeTE9Ijg5Ny4yMTUyODgiIHgxPSI1MzMuNzk5NTg5IiBzdHJva2Utd2lkdGg9IjEuNSIgZmlsbD0ibm9uZSIvPgogIDxsaW5lIHN0cm9rZT0iI0JGNUYwMCIgaWQ9InN2Z180IiB5Mj0iNDkxLjQ5OTgyOSIgeDI9IjEwNTcuNTk5OTYxIiB5MT0iNDk0Ljk5OTgyOSIgeDE9IjExLjciIHN0cm9rZS13aWR0aD0iMS41IiBmaWxsPSJub25lIi8+CiA8L2c+Cjwvc3ZnPg==)");
-    $('#rate').val(simrate+'x')
+    $('#rate_form').val(simrate+'x')
 };
-
 function two_v() {
     red2.src=ex_friend
     bluex = 1090
@@ -617,10 +613,8 @@ function two_v() {
     simrate=1
     mod = simrate*(0.0007523406152505/4)
     $(".holder").css("background-image", "url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+Cjxzdmcgd2lkdGg9IjEzMDAiIGhlaWdodD0iMTMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KCiA8Zz4KICA8dGl0bGU+TGF5ZXIgMTwvdGl0bGU+CiAgPGcgaWQ9IkxheWVyXzEiPgogICA8cmVjdCB5PSItMSIgaGVpZ2h0PSIxMzAyIiB3aWR0aD0iMTMwMiIgZmlsbD0iI0VCRUJFQiIgeD0iLTEiIGlkPSJjYW52YXNfYmFja2dyb3VuZCIvPgogIDwvZz4KICA8ZyBpZD0iTGF5ZXJfMiI+CiAgIDxwb2x5Z29uIHBvaW50cz0iOTQzLjMgMjUuMSA5NDkuNSA3MzEuNiAxNC43IDczNS4zIDguNCAyOC44IiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlPSIjQkY1RjAwIiBmaWxsPSJub25lIiBpZD0iQk9YXzJfIi8+CiAgIDxjaXJjbGUgaWQ9InN2Z18xIiByPSI1LjIiIGN5PSI1ODguNiIgY3g9IjExMDcuMSIgc3Ryb2tlLXdpZHRoPSI2IiBzdHJva2U9IiMwQTc1Q0MiIGZpbGw9IiNFQkVCRUIiLz4KICAgPHBvbHlnb24gaWQ9InN2Z18yIiBwb2ludHM9Ijg3MyA0Ni4yIDg3OC4xIDY5NC43IDk0LjcgNjk3LjMgODkuNSA0OC43IiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlPSIjNzU2NzY3IiBmaWxsPSJub25lIi8+CiAgIDxlbGxpcHNlIHJ5PSI0LjciIHJ4PSIzLjYiIGN5PSIyNy4yIiBjeD0iOTQ3LjUiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2U9IiNFRkVGMkIiIGZpbGw9IiNFQUJGMjUiIHRyYW5zZm9ybT0ibWF0cml4KDIuNzUzNjgwZS0wMyAtMSAxIDIuNzUzNjgwZS0wMyA5MTcuNjI0MyA5NzQuNjIzMSkiIGlkPSJzdmdfOV8yXyIvPgogICA8ZWxsaXBzZSByeT0iNC43IiByeD0iMy42IiBjeT0iMzk5LjUiIGN4PSI5NDkuMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iI0VGRUYyQiIgZmlsbD0iI0VBQkYyNSIgdHJhbnNmb3JtPSJtYXRyaXgoMi43NTM2ODBlLTAzIC0xIDEgMi43NTM2ODBlLTAzIDU0Ny4yMjggMTM0Ny42NTczKSIgaWQ9InN2Z18xMF8yXyIvPgogICA8bGluZSBpZD0ic3ZnXzMiIHkyPSIyNi45IiB4Mj0iNDk4IiB5MT0iNzM0LjIiIHgxPSI1MDQuMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iI0JGNUYwMCIgZmlsbD0ibm9uZSIvPgogICA8bGluZSBpZD0ic3ZnXzQiIHkyPSIzOTkuNSIgeDI9Ijk0Ni42IiB5MT0iNDAzIiB4MT0iMTEuNyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iI0JGNUYwMCIgZmlsbD0ibm9uZSIvPgogICA8cG9seWdvbiBpZD0ic3ZnXzUiIHBvaW50cz0iMTk0LjggNDguMiAyMDAgNjk2LjcgOTUuMiA2OTcgOTAgNDguNSIgZmlsbD0iI0VEMzUzNSIgb3BhY2l0eT0iMC42Ii8+CiAgIDxwb2x5Z29uIGlkPSJzdmdfNiIgcG9pbnRzPSI4NzIuMiA0Ny40IDg3Ny40IDY5NS45IDc3Mi43IDY5Ni4zIDc2Ny41IDQ3LjciIGZpbGw9IiMzMzAwOTkiIG9wYWNpdHk9IjAuNiIvPgogIDwvZz4KIDwvZz4KPC9zdmc+)");
-    $('#rate').val(simrate+'x')
+    $('#rate_form').val(simrate+'x')
 };
-
-
 function resetcap(){
     $(".holder").css("background-image", "url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+Cjxzdmcgd2lkdGg9IjEzMDAiIGhlaWdodD0iMTMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KCiA8Zz4KICA8dGl0bGU+TGF5ZXIgMTwvdGl0bGU+CiAgPGcgaWQ9IkxheWVyXzEiPgogICA8cmVjdCB5PSItMSIgaGVpZ2h0PSIxMzAyIiB3aWR0aD0iMTMwMiIgZmlsbD0iI0VCRUJFQiIgeD0iLTEiIGlkPSJjYW52YXNfYmFja2dyb3VuZCIvPgogIDwvZz4KICA8ZyBpZD0iTGF5ZXJfMiI+CiAgIDxwb2x5Z29uIHBvaW50cz0iOTQzLjMgMjUuMSA5NDkuNSA3MzEuNiAxNC43IDczNS4zIDguNCAyOC44IiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlPSIjQkY1RjAwIiBmaWxsPSJub25lIiBpZD0iQk9YXzJfIi8+CiAgIDxjaXJjbGUgaWQ9InN2Z18xIiByPSI1LjIiIGN5PSI1ODguNiIgY3g9IjExMDcuMSIgc3Ryb2tlLXdpZHRoPSI2IiBzdHJva2U9IiMwQTc1Q0MiIGZpbGw9IiNFQkVCRUIiLz4KICAgPHBvbHlnb24gaWQ9InN2Z18yIiBwb2ludHM9Ijg3MyA0Ni4yIDg3OC4xIDY5NC43IDk0LjcgNjk3LjMgODkuNSA0OC43IiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlPSIjNzU2NzY3IiBmaWxsPSJub25lIi8+CiAgIDxlbGxpcHNlIHJ5PSI0LjciIHJ4PSIzLjYiIGN5PSIyNy4yIiBjeD0iOTQ3LjUiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2U9IiNFRkVGMkIiIGZpbGw9IiNFQUJGMjUiIHRyYW5zZm9ybT0ibWF0cml4KDIuNzUzNjgwZS0wMyAtMSAxIDIuNzUzNjgwZS0wMyA5MTcuNjI0MyA5NzQuNjIzMSkiIGlkPSJzdmdfOV8yXyIvPgogICA8ZWxsaXBzZSByeT0iNC43IiByeD0iMy42IiBjeT0iMzk5LjUiIGN4PSI5NDkuMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iI0VGRUYyQiIgZmlsbD0iI0VBQkYyNSIgdHJhbnNmb3JtPSJtYXRyaXgoMi43NTM2ODBlLTAzIC0xIDEgMi43NTM2ODBlLTAzIDU0Ny4yMjggMTM0Ny42NTczKSIgaWQ9InN2Z18xMF8yXyIvPgogICA8bGluZSBpZD0ic3ZnXzMiIHkyPSIyNi45IiB4Mj0iNDk4IiB5MT0iNzM0LjIiIHgxPSI1MDQuMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iI0JGNUYwMCIgZmlsbD0ibm9uZSIvPgogICA8bGluZSBpZD0ic3ZnXzQiIHkyPSIzOTkuNSIgeDI9Ijk0Ni42IiB5MT0iNDAzIiB4MT0iMTEuNyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iI0JGNUYwMCIgZmlsbD0ibm9uZSIvPgogICA8cG9seWdvbiBpZD0ic3ZnXzUiIHBvaW50cz0iMTk0LjggNDguMiAyMDAgNjk2LjcgOTUuMiA2OTcgOTAgNDguNSIgZmlsbD0iI0VEMzUzNSIgb3BhY2l0eT0iMC42Ii8+CiAgIDxwb2x5Z29uIGlkPSJzdmdfNiIgcG9pbnRzPSI4NzIuMiA0Ny40IDg3Ny40IDY5NS45IDc3Mi43IDY5Ni4zIDc2Ny41IDQ3LjciIGZpbGw9IiMzMzAwOTkiIG9wYWNpdHk9IjAuNiIvPgogIDwvZz4KIDwvZz4KPC9zdmc+)");
     //red2.src = red1.src = ex_friend
@@ -640,12 +634,9 @@ function resetcap(){
     //red2y_offset = Math.round(Math.random() * (+38 - +7) + +7);
     red2angle = 270
     red2magnetic = 360 //ANGLE MINUS 90
-
     altitude = Math.round(Math.random() * (+34 - +21) + +21)+0;
     $('#altitude').html(+altitude+',000');
-
 };
-
 function mla() {
     $(".holder").css("background-image", "url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+Cjxzdmcgd2lkdGg9IjEzMDAiIGhlaWdodD0iMTMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KCiA8Zz4KICA8dGl0bGU+TGF5ZXIgMTwvdGl0bGU+CiAgPGcgaWQ9IkxheWVyXzEiPgogICA8cmVjdCB5PSItMSIgaGVpZ2h0PSIxMzAyIiB3aWR0aD0iMTMwMiIgZmlsbD0iI0VCRUJFQiIgeD0iLTEiIGlkPSJjYW52YXNfYmFja2dyb3VuZCIvPgogIDwvZz4KICA8ZyBpZD0iTGF5ZXJfMiI+CiAgIDxwb2x5Z29uIHBvaW50cz0iOTQzLjMgMjUuMSA5NDkuNSA3MzEuNiAxNC43IDczNS4zIDguNCAyOC44IiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlPSIjQkY1RjAwIiBmaWxsPSJub25lIiBpZD0iQk9YXzJfIi8+CiAgIDxjaXJjbGUgaWQ9InN2Z18xIiByPSI1LjIiIGN5PSI1ODguNiIgY3g9IjExMDcuMSIgc3Ryb2tlLXdpZHRoPSI2IiBzdHJva2U9IiMwQTc1Q0MiIGZpbGw9IiNFQkVCRUIiLz4KICAgPHBvbHlnb24gaWQ9InN2Z18yIiBwb2ludHM9Ijg3MyA0Ni4yIDg3OC4xIDY5NC43IDk0LjcgNjk3LjMgODkuNSA0OC43IiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlPSIjNzU2NzY3IiBmaWxsPSJub25lIi8+CiAgIDxlbGxpcHNlIHJ5PSI0LjciIHJ4PSIzLjYiIGN5PSIyNy4yIiBjeD0iOTQ3LjUiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2U9IiNFRkVGMkIiIGZpbGw9IiNFQUJGMjUiIHRyYW5zZm9ybT0ibWF0cml4KDIuNzUzNjgwZS0wMyAtMSAxIDIuNzUzNjgwZS0wMyA5MTcuNjI0MyA5NzQuNjIzMSkiIGlkPSJzdmdfOV8yXyIvPgogICA8ZWxsaXBzZSByeT0iNC43IiByeD0iMy42IiBjeT0iMzk5LjUiIGN4PSI5NDkuMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iI0VGRUYyQiIgZmlsbD0iI0VBQkYyNSIgdHJhbnNmb3JtPSJtYXRyaXgoMi43NTM2ODBlLTAzIC0xIDEgMi43NTM2ODBlLTAzIDU0Ny4yMjggMTM0Ny42NTczKSIgaWQ9InN2Z18xMF8yXyIvPgogICA8bGluZSBpZD0ic3ZnXzMiIHkyPSIyNi45IiB4Mj0iNDk4IiB5MT0iNzM0LjIiIHgxPSI1MDQuMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iI0JGNUYwMCIgZmlsbD0ibm9uZSIvPgogICA8bGluZSBpZD0ic3ZnXzQiIHkyPSIzOTkuNSIgeDI9Ijk0Ni42IiB5MT0iNDAzIiB4MT0iMTEuNyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iI0JGNUYwMCIgZmlsbD0ibm9uZSIvPgogICA8cG9seWdvbiBpZD0ic3ZnXzUiIHBvaW50cz0iMTk0LjggNDguMiAyMDAgNjk2LjcgOTUuMiA2OTcgOTAgNDguNSIgZmlsbD0iI0VEMzUzNSIgb3BhY2l0eT0iMC42Ii8+CiAgIDxwb2x5Z29uIGlkPSJzdmdfNiIgcG9pbnRzPSI4NzIuMiA0Ny40IDg3Ny40IDY5NS45IDc3Mi43IDY5Ni4zIDc2Ny41IDQ3LjciIGZpbGw9IiMzMzAwOTkiIG9wYWNpdHk9IjAuNiIvPgogIDwvZz4KIDwvZz4KPC9zdmc+)");
     red1magnetic = red2magnetic = Math.round(Math.random() * (+120 - +60) + +60);
@@ -653,9 +644,7 @@ function mla() {
     red1y = Math.round(Math.random() * (+600 - +150) + +150)+0;
     red2y= Math.round(Math.random() * (+70 - +0) + +0)+red1y;
     red2x= Math.round(Math.random() * (+50 - +-5) + +-5)+red1x;
-
 };
-
 function oh_stranger(){
     stranger.src = stranger_sprite
     stranger_x= Math.round(Math.random() * (+1200 - +1000) + +1000)+0;
@@ -664,22 +653,19 @@ function oh_stranger(){
     strangermagnetic = Math.round(Math.random() * (+300 - +240) + +240);
     strangerangle = strangermagnetic-90;
 };
-
 function clr_stranger(){
     stranger.src=""
 };
-
-
 //RATE UP
 function rateup(){
     simrate = simrate*2
     mod = simrate*(0.0007523406152505/4);
-    $('#rate').val(simrate+'x')
+    $('#rate_form').val(simrate+'x')
 }
 function ratedown(){
     simrate = simrate/2
     mod = simrate*(0.0007523406152505/4)
-    $('#rate').val(simrate+'x')
+    $('#rate_form').val(simrate+'x')
     };
 function keypress_handler(event) {
   console.log(event.keyCode)
@@ -690,20 +676,77 @@ function keypress_handler(event) {
 <body style="background-color: transparent;" scroll="no" style="overflow: hidden;"></body>
 <body>
         <div id="sidebar" class="sidebar" style="float:left; text-align:center; color:#000000d8;">
-                <input id = "blue_form" placeholder="HDG"></input>
+            <div class="FS" id="FS">
+            <button value = 'send' id = "rate" onclick="openFullscreen()" style="background-color:#0f0f0fdc; width: 62px; font-size: 12px; white-space: normal; word-wrap: break-word; color: #FFF;">FULL-SCREEN</button>
+            <button value = 'send' id = "rate" onclick="closeFullscreen()" style="background-color:#0f0f0fdc; width: 64px; font-size: 12px; color: #FFF;">ESC F.SCREEN</button></p>    
+            </div><div class="HDG" id="HDG">
+            <input id = "blue_form" placeholder="HDG"></input>
                 <button value = 'send' id = "ftr_submit" style="background-color: #418dc0d8; " onclick="vector()">BLUE</button><br/>
                 <input id = "red1_form" placeholder="HDG"></input>
                 <button value = 'send' id = "red1_submit" onclick="vector()">RED1</button><br/>
                 <input id = "red2_form" placeholder="HDG"></input>
-                <button value = 'send' id = "red2_submit" onclick="vector()">RED2</button><br/>
-                <div id="speed" class= "speed" style="text-align:left; color: #000000d8;"></div>
+                <button value = 'send' id = "red2_submit" onclick="vector()">RED2</button><br/></p>
+					<table width="140" border="0" cellspacing="1" cellpadding="1" style=" background-color: #cccccc28; font-size: 9px; right: 1px; position: absolute; font-weight: bold; float:left; text-align: left;">
+  <tbody>
+    <tr>
+      <td>[ &#8592; ] LEFT</td>
+      <td class="rightrow"> RIGHT [ &#8594; ]</td>
+    </tr>
+    <tr>
+      <td>[ &#60; ] LEFT</td>
+      <td class="rightrow">  RIGHT  [ &#62; ]</td>
+    </tr>
+    <tr>
+      <td>[ I ] LEFT</td>
+      <td class="rightrow"> RIGHT [ O ]</td>
+    </tr>
+    <tr>
+      <td>[&#8593;] RATE UP</td>
+      <td class="rightrow">RATE DN [&#8595;]</td>
+    </tr>
+    <tr>
+      <td>[ T ] CLIMB</td>
+      <td class="rightrow">DESCEND [ G ]</td>
+    </tr>
+    <tr>
+      <td>[ R ] Go to CAP</td>
+      <td class="rightrow">Marshal &#10558; [ E ]</td>
+    </tr>
+    <tr>
+      <td>[ U ] BOGEY</td>
+      <td class="rightrow">[ F ] EX FRIEND</td>
+    </tr>
+    <tr>
+      <td>[ K ] HOSTILE</td>
+      <td class="rightrow">[ N ] NEUTRAL</td>
+    </tr>
+    <tr>
+      <td>[ B ] RED1 NEUTRAL</td>
+      <td class="rightrow">[ M ] RED2 NEUTRAL</td>
+    </tr>
+    <tr>
+      <td>[ Z ] OPFOR FOX2</td>
+      <td class="rightrow">[ X ] OPFOR FOX1</td>
+    </tr>
+    <tr>
+      <td>[ Q ] FOX2 on ME</td>
+      <td class="rightrow">[ A ] ALL Clear on ME</td>
+    </tr>
+    <tr>
+      <td></p>[ P ] PAUSE</td>
+      <td class="rightrow"></p>START [ Enter ]</td>
+    </tr>
+  </tbody>
+</table>
+					</div>
+                <div id="speed" class= "speed"></div>
                 <div id="controls" class= "controls" style="text-align:right; color: #000000d8;">
                     <input id = "bluespeed_form" placeholder="400"style="width: 60px;"></input>
                     <button value = 'send' id = "bluespeed_submit" style="background-color: #418dc0d8; width: 60px; " onclick="speed()">KIAS</button><br/>
                     <input id = "redspeed_form" placeholder="400"style="width: 60px;"></input>
                     <button value = 'send' id = "redspeed_submit" onclick="speed()" style="width: 60px;">KIAS</button><br/>
                 </p>
-                    <input id = "rate" placeholder="1x"></input>
+                    <input id = "rate_form" placeholder="1x"></input>
                     <button value = 'send' id = "rate" onclick="rateup()" style="width: 35px;">UP</button>
                     <button value = 'send' id = "rate" onclick="ratedown()" style="width: 35px;">DW</button><br/></p>
                     <button value = 'send' id = "rate" onclick="one_v()" style="background-color:#414d4725; width: 130px;">1v1</button></br>
@@ -712,12 +755,12 @@ function keypress_handler(event) {
                     <button value = 'send' id = "rate" onclick="mla()" style="background-color:#e7111125; width: 62px; font-size: 13px;">OPFOR MLA</button></br></p>
                     <button value = 'send' id = "rate" onclick="oh_stranger()" style="background-color:#4294b46b; width: 83px; font-size:13px; white-space: normal; word-wrap: break-word;">OH NO! STRANGER</button>
                     <button value = 'send' id = "rate" onclick="clr_stranger()" style="background-color:#4294b46b; width: 49px; font-size:13px; white-space: normal; word-wrap: break-word;">ALL CLR</button>
-
+                    
             </div>
            </div>
             </div>
   <div class="holder">
-        <div class="bullseye" id="bullseye" style="float:centre;padding-left: 10px;font-weight: bold;"></div>
+        <div class="bullseye" id="bullseye" style="float:centre;padding-left: 10px;font-weight:1;"></div>
    <canvas id="holder" width="1300px" height="1300px"></canvas>
     <br/>
     <canvas id="canvas" width="1300px" height="1300px">
